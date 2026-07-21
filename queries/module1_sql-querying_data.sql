@@ -294,5 +294,136 @@ WHERE four_regions LIKE '%merica%';
 
 --=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 -------------------------------------- UNIDADE 3 - ORDENAÇÃO, LIMITAÇÃO E UNICIDADE
--- ORDER BY
+-- ORDER BY - ordena os dados em ordem crescente: números do menor para o maior,
+-- caracteres em ordem alfabética do A para o Z, datas da mais antiga para a mais nova, booleano do
+-- falso para o verdadeiro
 --=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+SELECT * FROM population;
+
+SELECT country, tot_pop, ref_year
+FROM population 
+WHERE ref_year = 2000
+ORDER BY tot_pop;
+
+-- DESC - inverte
+SELECT country, tot_pop, ref_year
+FROM population 
+WHERE ref_year = 2000
+ORDER BY tot_pop DESC;
+
+--  Quais os países que atingiram população superior a 1 bilhão de habitantes e em que ano isso aconteceu? 
+SELECT country, tot_pop, ref_year
+FROM population 
+WHERE tot_pop > 1e9
+ORDER BY country, ref_year;
+
+SELECT country, tot_pop, ref_year
+FROM population 
+WHERE tot_pop > 1e9
+ORDER BY country DESC, ref_year;
+
+SELECT country, ref_year, tot_pop
+FROM population
+WHERE tot_pop > 1000000000
+ORDER BY country DESC, ref_year DESC;
+
+-- LIMIT - Limitando os resultados -> se quisermos trazer apenas os 20 países mais populosos no ano 2000
+SELECT country, tot_pop
+FROM population
+WHERE ref_year = 2000
+ORDER BY tot_pop DESC
+LIMIT 10;
+
+-- Utilizando a tabela gdp_pc, selecione os países com menor PIB per capita em 2009.
+	SELECT * FROM gdp_pc;
+
+SELECT country AS "País", 
+	   gdp_pc AS "PIB",
+	   ref_year AS "Ano"
+FROM gdp_pc
+WHERE ref_year = 2009
+ORDER BY gdp_pc;
+
+-- Utilizando a tabela avg_income, selecione os países com menor renda per capita em 2009.
+SELECT * FROM avg_income;
+
+SELECT country AS "País", 
+	   mean_usd AS "Média",
+	   ref_year AS "Ano"
+FROM avg_income
+WHERE ref_year = 2009
+ORDER BY mean_usd;
+
+-- Utilizando a tabela fertility, encontre os países com maior taxa de natalidade em 2009.
+SELECT * FROM fertility;
+
+SELECT country AS "País", 
+	   mean_babies AS "Média",
+	   ref_year AS "Ano"
+FROM fertility
+WHERE ref_year = 2009
+ORDER BY mean_babies DESC;
+
+-- Utilizando a tabela child_mortality, indique os países com a maior taxa de mortalidade infantil em 2009.
+SELECT * FROM child_mortality;
+
+SELECT country AS "País", 
+	   tot_deaths AS "Total Mortes",
+	   ref_year AS "Ano"
+FROM child_mortality
+WHERE ref_year = 2009
+ORDER BY tot_deaths DESC;
+
+-- Utilizando a tabela womem_years_at_school, selecione os países com menor tempo médio na escola das mulheres de 25 anos em 2009.
+SELECT * FROM women_years_at_school;
+
+SELECT country AS "País", 
+	   mean_years AS "Tempo Médio",
+	   ref_year AS "Ano"
+FROM women_years_at_school
+WHERE ref_year = 2009
+ORDER BY mean_years
+LIMIT 10;
+
+-- Utilizando a tabela gdp_pc, selecione os 6 países com menor PIB per capita em 2009.
+SELECT country AS "País", 
+	   gdp_pc AS "PIB",
+	   ref_year AS "Ano"
+FROM gdp_pc
+WHERE ref_year = 2009
+ORDER BY gdp_pc
+LIMIT 6;
+
+-- Utilizando a tabela life_expectancy, encontre os seis países com a menor expectativa de vida em 2009.
+SELECT * FROM life_expectancy;
+
+SELECT country AS "País", 
+	   tot_years AS "Total de Anos",
+	   ref_year AS "Ano"
+FROM life_expectancy
+WHERE ref_year = 2009
+ORDER BY life_expectancy
+LIMIT 6;
+
+-- Sem apresentar linhas nulas, indique quais são as categorias do campo wb4income da tabela country.
+SELECT * FROM country;
+
+SELECT DISTINCT wb4income
+FROM country
+WHERE wb4income IS NOT NULL;
+
+-- Selecione os cinco últimos países distintos, na ordem alfabética, da tabela population.
+SELECT * FROM population;
+
+SELECT DISTINCT country AS "País"
+FROM population
+ORDER BY country DESC
+LIMIT 5;
+
+--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+------------------------------------------ NOTAS
+--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+-- A Base dos Dados (datasets no Big Query) é uma ONG que mantém a maior plataforma pública de dados do Brasil e oferece serviços especializados 
+-- em engenharia, análise e capacitação de dados: https://basedosdados.org/
